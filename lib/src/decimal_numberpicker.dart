@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'numberpicker.dart';
 
 class DecimalNumberPicker extends StatelessWidget {
-  final int minValue;
-  final int maxValue;
+  final int intMinValue;
+  final int intMaxValue;
+  final int doubleMinValue;
+  final int doubleMaxValue;
   final double value;
   final ValueChanged<double> onChanged;
   final int itemCount;
@@ -32,8 +34,10 @@ class DecimalNumberPicker extends StatelessWidget {
 
   const DecimalNumberPicker({
     Key? key,
-    required this.minValue,
-    required this.maxValue,
+    required this.intMinValue,
+    required this.intMaxValue,
+    required this.doubleMinValue,
+    required this.doubleMaxValue,
     required this.value,
     required this.onChanged,
     this.itemCount = 3,
@@ -49,13 +53,13 @@ class DecimalNumberPicker extends StatelessWidget {
     this.integerZeroPad = false,
     this.integerDecoration,
     this.decimalDecoration,
-  })  : assert(minValue <= value),
-        assert(value <= maxValue),
+  })  : assert(intMinValue <= value),
+        assert(value <= intMaxValue),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isMax = value.floor() == maxValue;
+    final isMax = value.floor() == this.doubleMaxValue;
     final decimalValue = isMax
         ? 0
         : ((value - value.floorToDouble()) * math.pow(10, decimalPlaces))
@@ -65,8 +69,8 @@ class DecimalNumberPicker extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         NumberPicker(
-          minValue: minValue,
-          maxValue: maxValue,
+          minValue: intMinValue,
+          maxValue: intMaxValue,
           value: value.floor(),
           onChanged: _onIntChanged,
           itemCount: itemCount,
@@ -80,7 +84,7 @@ class DecimalNumberPicker extends StatelessWidget {
           decoration: integerDecoration,
         ),
         NumberPicker(
-          minValue: 0,
+          minValue: doubleMinValue,
           maxValue: doubleMaxValue,
           value: decimalValue,
           onChanged: _onDoubleChanged,
@@ -99,14 +103,16 @@ class DecimalNumberPicker extends StatelessWidget {
 
   void _onIntChanged(int intValue) {
     final newValue =
-        (value - value.floor() + intValue).clamp(minValue, maxValue);
+        (value - value.floor() + intValue).clamp(intMinValue, intMaxValue);
     onChanged(newValue.toDouble());
   }
 
   void _onDoubleChanged(int doubleValue) {
-    final decimalPart = double.parse(
-        (doubleValue * math.pow(10, -decimalPlaces))
-            .toStringAsFixed(decimalPlaces));
-    onChanged(value.floor() + decimalPart);
+    // final decimalPart = double.parse(
+    //     (doubleValue * math.pow(10, -decimalPlaces))
+    //         .toStringAsFixed(decimalPlaces));
+    print(doubleValue);
+    print(double.parse('${value.floor()}.$doubleValue'));
+    onChanged(double.parse('${value.floor()}.$doubleValue'));
   }
 }
