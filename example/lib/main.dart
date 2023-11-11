@@ -141,7 +141,7 @@ class _DecimalExample extends StatefulWidget {
 }
 
 class __DecimalExampleState extends State<_DecimalExample> {
-  double _currentDoubleValue = 3.0;
+  double _currentDoubleValue = 1800.5;
 
   @override
   Widget build(BuildContext context) {
@@ -151,9 +151,11 @@ class __DecimalExampleState extends State<_DecimalExample> {
         Text('Decimal', style: Theme.of(context).textTheme.headline6),
         DecimalNumberPicker(
           value: _currentDoubleValue,
-          minValue: 0,
-          maxValue: 10,
-          decimalPlaces: 2,
+          intMinValue: 0,
+          intMaxValue: 4000,
+          doubleMaxValue: 10,
+          doubleMinValue: 0,
+          decimalPlaces: 1,
           onChanged: (value) => setState(() => _currentDoubleValue = value),
         ),
         SizedBox(height: 32),
