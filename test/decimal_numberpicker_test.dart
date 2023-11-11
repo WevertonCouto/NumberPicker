@@ -33,8 +33,10 @@ Future<DecimalNumberPicker> _testNumberPicker({
     StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
       picker = DecimalNumberPicker(
         value: value,
-        minValue: minValue,
-        maxValue: maxValue,
+        intMinValue: minValue,
+        intMaxValue: maxValue,
+        doubleMaxValue: 99,
+        doubleMinValue: 10,
         decimalPlaces: decimalPlaces,
         onChanged: (newValue) => setState(() => value = newValue),
       );
